@@ -1,70 +1,89 @@
 import React, { Component } from 'react'
-import { StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, TouchableOpacity, Button, Text, View } from 'react-native';
 import socketIO from 'socket.io-client';
 
 import { connect } from 'react-redux';
 
+let buttonColor = (data , userSelectedSeats) => {
+        if(data.status === 1 ) {
+            return "#FFA500";
+        } else if (data.selected === 1  && !userSelectedSeats.includes(data.seatNumber)) {
+            return '#A9A9A9';   //dark gray if seat is already selected by other user
+        } else if (data.selected === 1 && userSelectedSeats.includes(data.seatNumber)) {
+            return '#00FF00';  //green for selected seat
+        } else if (data.status === 0 && data.selected ===0) {
+            return '#D3D3D3';
+        } 
+    }
 
-//let user = []
+
 class Seat extends Component {
     constructor(props) {
         super(props);
-        this.buttonColor = this.buttonColor.bind(this)
+        this.state = {
+            backgroundColor: buttonColor(this.props.data, this.props.userSelectedSeats)
+        }
+
+        this.disableCheck = this.disableCheck.bind(this)
+        
     }
 
     sendData = (data) => {
         console.log(data.seatNumber);
-        //const userSeats = this.props.userSelectedSeat;
-        console.log(this.props.userSelectedSeats);
-        // user.push(data)
-        if(data.selected === 0) {
-            let socket = socketIO('http://10.10.3.91:4000');
-            socket.emit("seatSelected", {seatNumber: data.seatNumber, selected: 1})
-            this.props.recevedData()
-            this.props.addSeat(data.seatNumber);
-        } else if (this.props.userSelectedSeats.includes(data.seatNumber)) {
+
+        if (this.props.userSelectedSeats.includes(data.seatNumber)) {
+            console.log("entering to remove seat")
+            this.props.removeSeat(data.seatNumber);
             let socket = socketIO('http://10.10.3.91:4000');
             socket.emit("seatSelected", {seatNumber: data.seatNumber, selected: 0})
-            this.props.recevedData()
-            this.props.removeSeat(data.seatNumber);
-        }  
-        //const duplicates = [...new Set(user)]
-    
-    }
-
-    buttonColor (data) {
-        if (data.seatStatus ===1  || (data.seatSelected ===1  && !this.state.userSelectedSeat.includes(data.seatNumber))) {
-            return '#A9A9A9';   //dark gray if seat is already booked by other user
-        } else if (data.seatSelected === 1 && this.state.userSelectedSeat.includes(data.seatNumber)) {
-            return '#00FF00';  //green for selected seat
-        } else if (data.seatStatus === 0 && data.seatSelected ===0) {
-            return '#D3D3D3';
+        } else {
+            this.props.addSeat(data.seatNumber);
+            let socket = socketIO('http://10.10.3.91:4000');
+            socket.emit("seatSelected", {seatNumber: data.seatNumber, selected: 1});
+            //this.props.receivedData()
         }
-    }
-      
 
+        // this.setState({
+        //     backgroundColor: buttonColor(this.props.data, this.props.userSelectedSeats)
+        // })
+        // console.log(this.state.backgroundColor)
+    
+    } 
+
+   
+      
+    disableCheck (data) {
+        if (data.status == 1 ) {
+            return true;
+        } else if (data.selected == 1 && this.props.userSelectedSeats.includes(data.seatNumber)){
+            return false;
+        } else if (data.selected == 1  && !this.props.userSelectedSeats.includes(data.seatNumber)) {
+            return true;
+        }
+      }
 
     render() {
         const { data} = this.props;
-        function disableCheck (data) {
-            if (data.seatStatus === 1  || (data.seatSelected === 1  && !this.props.userSelectedSeats.includes(data.seatNumber))) {
-                return true;
-            } else if (data.seatSelected === 1 && this.props.userSelectedSeats.includes(data.seatNumber)){
-                return false;
-            }
-          }
 
-        
+        this.state = {
+            backgroundColor: buttonColor(this.props.data, this.props.userSelectedSeats)
+        }
 
         return (
-            <TouchableOpacity style={styles.border} disabled={data.status === 1 ? true : false}>
-                <Button 
-                    disabled={disableCheck(data)} 
-                    color={this.buttonColor(data)}
+
+            <View>
+            <TouchableOpacity style={[styles.border, {backgroundColor: this.state.backgroundColor}]} disabled={this.disableCheck(data)} onPress={() => this.sendData(data)}>
+                {/* <Button 
+                    //disabled={disableCheck(data)} 
+                    // color={(data.seatStatus ===1  || (data.seatSelected ===1  && !this.state.userSelectedSeat.includes(data.seatNumber))) ? '#A9A9A9' : 
+                    // (data.seatSelected === 1 && this.state.userSelectedSeat.includes(data.seatNumber)) ? '#00FF00' : '#D3D3D3' }
+                    color={this.props.userSelectedSeats.includes(data.seatNumber) ? 'green' : data.status == 1 ? 'red' : 'gray'}
                     title={data.seatNumber + ''} 
-                    onPress={() => this.sendData(data)}
-                />
+                    
+                /> */}
+                <Text color={this.props.userSelectedSeats.includes(data.seatNumber) ? 'green' : data.status == 1 ? 'red' : 'gray'}>{data.seatNumber+ ''}</Text>
             </TouchableOpacity>
+            </View>
         )
     }
 };

@@ -1,4 +1,4 @@
-import { ADD_SEAT, CLEAR_SEATS, INITIAL_SEATS, REMOVE_SEAT } from './actionTypes';
+import { ADD_SEAT, CLEAR_SEATS, INITIAL_SEATS, REMOVE_SEAT,UPDATE_SEATS } from './actionTypes';
 import { combineReducers} from 'redux';
  
 const initialstate = {
@@ -13,15 +13,23 @@ const seatReducer = (state = initialstate , action ) => {
         case ADD_SEAT:
             return {
                 ...state ,
-                userSelectedSeats: state.userSelectedSeats.concat(action.payload) 
+                userSelectedSeats: [...state.userSelectedSeats, action.payload]
             }
         case REMOVE_SEAT:
+            let newArr = [...state.userSelectedSeats.filter((elem) => {
+                return elem != action.payload;
+            })]
             return {
                 ...state,
-                userSelectedSeats: state.userSelectedSeats.splice(action.payload, 1)
+                userSelectedSeats: newArr
             }
 
         case INITIAL_SEATS: 
+            return {
+                ...state ,
+                seats: action.payload
+            }
+        case UPDATE_SEATS: 
             return {
                 ...state ,
                 seats: action.seats

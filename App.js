@@ -9,12 +9,12 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createStore , applyMiddleware} from 'redux';
 import seatReducer from "./reduxConfig/SeatReducer";
-
-const store = createStore(seatReducer, applyMiddleware(thunk));
+import logger from 'redux-logger';
+const store = createStore(seatReducer, applyMiddleware(thunk, logger));
 
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './components/HomeScreen';
-import ProfileScreen from './components/ProfileScreen'; 
+import Fooditems from './components/foodScreen/Fooditems';
 import seats from './components/seats';
 
 
@@ -28,8 +28,10 @@ const App = () => {
             component={HomeScreen}
             options={{ title: 'Welcome' }}
           />
-          <Stack.Screen name="Profile" component={ProfileScreen} />
+         
           <Stack.Screen name="seats" component={seats} />
+          <Stack.Screen name="fooditems" component={Fooditems} />
+
           </Stack.Navigator>
         
         </NavigationContainer>  

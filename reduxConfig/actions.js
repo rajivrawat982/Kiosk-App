@@ -1,4 +1,4 @@
-import { ADD_SEAT , CLEAR_SEATS, INITIAL_SEATS, REMOVE_SEAT } from "./actionTypes"
+import { ADD_SEAT , CLEAR_SEATS, INITIAL_SEATS, REMOVE_SEAT, UPDATE_SEATS } from "./actionTypes"
 
 
 export const AddSeat = (seatNumber) => {
@@ -18,13 +18,17 @@ export const RemoveSeat = (seatNumber) => {
 //used only by actons for sockets
 export const initialSeats = (res) => ({
     type: INITIAL_SEATS,
-    seats: res   
+    payload: res   
 })
 
 export const clearuserseats = () => {
    return { type: CLEAR_SEATS}
 }
 
+export const updateSeats = (res) => ({
+    type: UPDATE_SEATS,
+    seats: res
+})
 
 
 /***************************************************************************************** */
@@ -32,18 +36,18 @@ export const clearuserseats = () => {
 /***************************************************************************************** */
 // const socket = socketIO("http://10.10.3.91:4000");
 
-export const loadInitialSeatsSocket = (socket) => {
-    return (dispatch) => {
-        socket.on('getAllseats', (res) => {
-            dispatch(initialSeats(res));
-        })
-    }
-}
+// export const loadInitialSeatsSocket = (socket) => {
+//     return (dispatch) => {
+//         socket.on('getAllseats', (res) => {
+//             dispatch(initialSeats(res));
+//         })
+//     }
+// }
 
 export const getUpdatedState = (socket) => {
     return (dispatch) => {
         socket.on('updatedSeatSelection' , (res) => {
-            dispatch(initialSeats(res))
+            dispatch(updateSeats(res))
         })
     }
 }
