@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React from 'react';
+// import socketIO from 'socket.io-client';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -7,15 +8,27 @@ const Stack = createStackNavigator();
 
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { createStore , applyMiddleware} from 'redux';
+import { createStore , applyMiddleware , combineReducers } from 'redux';
 import seatReducer from "./reduxConfig/SeatReducer";
+import foodReducer from './reduxConfig/foodlist/foodlistReducer';
+import foodorderReducer from './reduxConfig/foodlist/foodorderReducer';
 import logger from 'redux-logger';
-const store = createStore(seatReducer, applyMiddleware(thunk, logger));
+
+const rootReducer = combineReducers({
+  seatReducer,
+  foodReducer,
+  foodorderReducer
+})
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+
 
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './components/HomeScreen';
 import Fooditems from './components/foodScreen/Fooditems';
 import seats from './components/seats';
+import orderFood from './components/foodorderScreen/orderFood';
 
 
 const App = () => {
@@ -31,6 +44,8 @@ const App = () => {
          
           <Stack.Screen name="seats" component={seats} />
           <Stack.Screen name="fooditems" component={Fooditems} />
+          <Stack.Screen name="orderfood" component={orderFood} />
+
 
           </Stack.Navigator>
         

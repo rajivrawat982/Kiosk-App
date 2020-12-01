@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        userSelectedSeats: state.userSelectedSeats
+        userSelectedSeats: state.seatReducer.userSelectedSeats
     }
 }
 

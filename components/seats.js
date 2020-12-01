@@ -13,8 +13,8 @@ class seats extends Component {
    this.state = {
           list: []
         }
-
-  //this.receivedData = this.receivedData.bind(this);  
+  
+    console.log("seats screen constructor")
   }
 
 
@@ -34,8 +34,15 @@ class seats extends Component {
       this.setState({                                           //might be this not run in sync so i have to use promise so after action dispatch properly we use setState
         list: this.props.serverSeats
       })
-      console.log("updated socket listr", this.state.list);
+      //console.log("updated socket list", this.state.list);
     })
+
+    console.log("seats componentDidmount")
+  }
+
+  //clear redux store here
+  componentWillUnmount() {
+    console.log("seats component is unmounting")
   }
 
   updatingReduxSeats = () => {
@@ -144,8 +151,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-      userSelectedSeats: state.userSelectedSeats,
-      serverSeats: state.seats
+      userSelectedSeats: state.seatReducer.userSelectedSeats,
+      serverSeats: state.seatReducer.seats
   }
 }
 

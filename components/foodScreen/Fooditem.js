@@ -19,7 +19,7 @@ class FoodItem extends React.Component {
                     <Image style={styles.image} source={{uri:item.imageUrl}} />
                 </View>
                 <View style={styles.items}>
-                    <Text style={styles.text} >Name: {item.itemName}</Text>
+                    <Text style={styles.text} >{item.itemName}</Text>
                     <Text style={styles.text} >Cost: {item.unitPrice}</Text>
                     <Text style={styles.text} >Available: {item.amountAvailable}</Text>
                     <View style={styles.addCart}>
@@ -73,11 +73,11 @@ const styles = StyleSheet.create({
     }
   })
 
-const mapStateToProps = (state) => {
-    return {
-        food: state
-     }
- }
+// const mapStateToProps = (state) => {
+//     return {
+//         food: state
+//      }
+//  }
  
  const mapDispatchToProps = dispatch => {
      return {
@@ -86,4 +86,4 @@ const mapStateToProps = (state) => {
  }
  
  
- export default connect(mapStateToProps, mapDispatchToProps)(FoodItem)
+ export default connect(null, mapDispatchToProps)(FoodItem);

@@ -1,6 +1,5 @@
 import { ADD_SEAT, CLEAR_SEATS, INITIAL_SEATS, REMOVE_SEAT,UPDATE_SEATS } from './actionTypes';
-import { combineReducers} from 'redux';
- 
+
 const initialstate = {
     userSelectedSeats: [],
     loading: false,
