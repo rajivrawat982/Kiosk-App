@@ -132,7 +132,8 @@ const styles = StyleSheet.create({
   reverse: {
     flex: 1,
     flexDirection: 'column-reverse',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'red'
   },
   border: {
     flex: 1,
@@ -141,7 +142,10 @@ const styles = StyleSheet.create({
   reverseMargin: {
     flex: 1,
     flexDirection: 'column-reverse',
-    alignItems: 'center'
+    alignItems: 'center',
+    // backgroundColor: 'blue',
+    justifyContent: 'flex-end',
+    borderRightColor: 'black'
     }
     
 //     text: {

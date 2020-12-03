@@ -11,6 +11,7 @@ class OrderSeat extends Component {
         super(props)
         this.state = {
             food: {
+                foodName: this.props.item.itemName,
                 foodItemId: this.props.item.itemId,
                 seat: this.props.seat,
                 unitPrice: this.props.item.unitPrice, 
@@ -28,8 +29,8 @@ class OrderSeat extends Component {
                 if(this.props.item.itemId === item.foodItemId && item.value !== 0 && this.state.food.seat === item.seat) {
                     this.setState({
                         food: { 
+                            foodName: item.itemName,
                             foodItemId: item.foodItemId,
-                            itemName: item.itemName,
                             seat: item.seat,
                             unitPrice: item.unitPrice, 
                             imageUrl: item.imageUrl,
@@ -44,6 +45,7 @@ class OrderSeat extends Component {
     increase = () => {
         this.setState({
             food:{
+                foodName: this.props.item.itemName,
                 foodItemId: this.state.food.foodItemId, 
                 seat: this.state.food.seat,
                 unitPrice: this.props.item.unitPrice, 
@@ -53,13 +55,15 @@ class OrderSeat extends Component {
         })
         this.props.increment(this.state.food);
         // let socket = socketIO('http://10.10.3.91:4000');
+        // console.log('increase', this.state.food)
         socket.emit("decreaseAmount", {itemId: this.state.food.foodItemId})
     }
 
     decrease = () => {
         if (this.state.food.value > 0) {
             this.setState({
-                food: { 
+                food: {
+                    foodName: this.props.item.itemName,
                     foodItemId: this.state.food.foodItemId,
                     seat: this.state.food.seat,
                     unitPrice: this.props.item.unitPrice, 
@@ -136,7 +140,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
    return {
-       foodArray: state.foodReducer.foodArray
+       foodArray: state.foodReducer.foodArray,
+       foodlist: state.foodReducer.foodlist
     }
 }
 

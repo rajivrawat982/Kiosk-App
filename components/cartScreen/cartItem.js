@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, Image, Button, Dimensions } from 'react-native'
 import { connect } from 'react-redux'
+import { socket } from "../../SocketComponent";
+
+
+const width = Dimensions.get('window').width;
 
 class CartItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
             food: {
+                foodName: this.props.item.foodName,
                 foodItemId: this.props.item.foodItemId,
                 seat: this.props.item.seat,
                 unitPrice: this.props.item.unitPrice, 
@@ -19,6 +24,7 @@ class CartItem extends Component {
     increase = () => {
         this.setState({
             food:{
+                foodName: this.props.item.foodName,
                 foodItemId: this.state.food.foodItemId,
                 seat: this.state.food.seat,
                 unitPrice: this.props.item.unitPrice, 
@@ -26,13 +32,16 @@ class CartItem extends Component {
                 value: this.state.food.value + 1, 
             },
         })
-        this.props.increment(this.state.food)
+        this.props.increment(this.state.food);
+        socket.emit("decreaseAmount", {itemId: this.state.food.foodItemId})
+
     }
 
     decrease = () => {
         if (this.state.food.value >= 0) {
             this.setState({
                 food: { 
+                    foodName: this.props.item.foodName,
                     foodItemId: this.state.food.foodItemId,
                     seat: this.state.food.seat,
                     unitPrice: this.props.item.unitPrice, 
@@ -41,12 +50,14 @@ class CartItem extends Component {
                 },
             })
             this.props.decrement(this.state.food)
+            socket.emit("increaseAmount", {itemId: this.state.food.foodItemId})
+
         }
     }
 
     render() {
         const { item } = this.props;
-        console.log(item)
+        // console.log(item)
         return (
             <View style={styles.view}>
                 <View style={styles.images}>
@@ -54,11 +65,11 @@ class CartItem extends Component {
                 </View>
                 <View style={styles.seatView}>
                     <View>
-                        <Text style={styles.seatNoAndCost}>Name: {this.state.food.total}</Text>
-                        <Text style={styles.seatNoAndCost}>Seat No: {item.seat}</Text>
+                        <Text style={styles.seatNoAndCost}>{this.state.food.foodName}</Text>
+                        {/* <Text style={styles.seatNoAndCost}>Seat No: {item.seat}</Text> */}
                     </View>
                     <View style={ this.state.food.value !== 0 ? { width: 75, margin: 5, visibility: 'visible' } : { display: 'none' }}>
-                        <View style={styles.flex}>
+                        <View style={styles.addsubtract}>
                             <View style={styles.width}>
                                 <Button 
                                     title='-'
@@ -76,13 +87,13 @@ class CartItem extends Component {
                             </View>
                         </View>
                     </View>
-                    <View style={ this.state.food.value === 0 ? { width: 75, margin: 5, visibility: 'visible' } : { display: 'none' }}>
+                    {/* <View style={ this.state.food.value === 0 ? { width: 75, margin: 5, visibility: 'visible' } : { display: 'none' }}>
                         <Button 
                             title='Add'
                             color='orange'
                             onPress={() => this.increase()}
                         />
-                    </View>
+                    </View> */}
                 </View>
             </View>
         )
@@ -92,18 +103,23 @@ class CartItem extends Component {
 const styles = StyleSheet.create({
     view: {
         borderWidth: 1,
-        width: 340,
-        borderRadius: 10,
         flexDirection: 'row',
-        margin: 10
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        width: width/3,
+        borderRadius: 10,
+        margin: 10,
+        backgroundColor: '#e4e7ed'
     },
     seatView: {
-        flexDirection: 'row',
-        margin: 10
+        flexDirection: 'column',
+        margin: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    flex: {
+    addsubtract: {
         flexDirection: 'row',
-        // margin: 4
+        margin: 4,
     },
     text: {
         textAlign: 'center',
@@ -116,9 +132,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 2
     },
-    seatNoAndCost: {
-        fontSize: 16, 
-    },
     width: {
         width: 25
     }
@@ -126,7 +139,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        total: state.foodReducer,
+        total: state.foodReducer.total,
      }
  }
 

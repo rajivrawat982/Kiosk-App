@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Button, Dimensions, ScrollView } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
 
-const {width,height} = Dimensions.get('window')
+const width = Dimensions.get('window').width;
+
 
 class FoodItem extends React.Component {
 
@@ -20,24 +22,28 @@ class FoodItem extends React.Component {
                 </View>
                 <View style={styles.items}>
                     <Text style={styles.text} >{item.itemName}</Text>
-                    <Text style={styles.text} >Cost: {item.unitPrice}</Text>
+                    <Text style={styles.text} >
+                        <FontAwesome5  name={'rupee-sign'} size={15}/>
+                        {` ${item.unitPrice}`}
+                    </Text>
                     <Text style={styles.text} >Available: {item.amountAvailable}</Text>
-                    <View style={styles.addCart}>
-                        <View style={ item.amountAvailable !== 0 ? { width: 100,  visibility: 'visible' }:{ display: 'none' } }>
+                    
+                </View>
+                <View style={styles.addCart}>
+                        <View style={ item.amountAvailable !== 0 ? {visibility: 'visible' }:{ display: 'none' } }>
                             <Button 
                                 onPress={() => this.order(item)}
                                 title="Add Cart"
                                 color="orange"
                             />
                         </View>
-                        <View style={ item.amountAvailable === 0 ? { width: 150, visibility: 'visible'}:{ display: 'none' }}>
+                        <View style={ item.amountAvailable === 0 ? {  visibility: 'visible'}:{ display: 'none' }}>
                             <Button 
                                 onPress={() => alert("Not Available")}
                                 title="Not Available"
                                 color="red"
                             />
                         </View>
-                    </View>
                 </View>
             </View>
         )
@@ -46,31 +52,33 @@ class FoodItem extends React.Component {
 
 const styles = StyleSheet.create({
     image: {
-        width: 150,
-        height: 110,
+        width: (width/3-100) - 20,
+        height: 150,
         borderRadius: 10,
     },
     border: {
-        borderWidth: 1,
+        // borderWidth: 1,
         borderRadius: 10,
         margin: 10,
-        flexDirection: 'row',
-        width: 350,
+        flexDirection: 'column',
+        width: width/3-100,
+        backgroundColor: '#f5f7fa',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     text: {
-        fontSize: 16,
+        fontSize: 14,
         margin: 2
     },
     images: {
         margin: 2
     },
     items: {
-        margin: 5
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 5,
     },
-    addCart: {
-        position: "absolute",
-        bottom: 0,
-    }
+    
   })
 
 // const mapStateToProps = (state) => {

@@ -1,8 +1,15 @@
+
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Image, StyleSheet, Button, View } from 'react-native';
+import { Image, StyleSheet, Button, View , Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
+
+console.log('width', width);
+console.log('height', height);
 
 class HomeScreen extends Component {
 
@@ -28,17 +35,16 @@ class HomeScreen extends Component {
   render() {
     return (
         <View style={styles.view}>
-        <Image
-          style={styles.image}
-          source={require('../assets/logo.png')} 
-        />
-        <View style={styles.button}>
-          <Button
-            onPress={() => this.props.navigation.navigate('seats')}
-            title='Start'
-            color='orange'
-          />
-        </View>
+          <View style={styles.image}>
+            <Image source={require('../assets/logo.png')} />
+          </View>
+          <View style={styles.button}>
+            <Button
+              onPress={() => this.props.navigation.navigate('seats')}
+              title='Start'
+              color='orange'
+            />
+          </View>
         </View>
     )
   }
@@ -47,17 +53,22 @@ class HomeScreen extends Component {
 
 const styles = StyleSheet.create({
   view: {
-    alignItems: 'center'
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  // image: {
-  //   width: 500,
-  //   height: 500,
-  // },
-  // button: {
-  //   width: '50%',
-  //   flex: 1,
-  //   alignItems: 'center',
-  // }
+  image: {
+    width: width/2,
+    height: height/2,
+    marginBottom: 20,
+    borderRadius: 5,
+    alignItems: 'center',
+    
+  },
+  button: {
+    width: width/6,
+    
+  }
 })
 
 const mapStateToProps = (state) => {

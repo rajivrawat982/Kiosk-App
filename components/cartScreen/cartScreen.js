@@ -1,21 +1,24 @@
 import React from 'react';
 import { StyleSheet, View, Button, Text, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
-import seat from '../seat';
-import CartItem from './cartItem';
+// import seat from '../seat';
+import SeatFood from './seatFood';
 
 class CartScreen extends React.Component{
     constructor(props) {
         super(props) 
         this.state = {
-            listOfItems: {}
+            listOfItems: [],
         }
     }
 
     componentDidMount() {
+        var response = this.trialFunction();
+        // console.log("rersdsd", response);
+        
         this.setState({
-            listOfItems: this.trialFunction()
-        })
+            listOfItems: response,
+        },() => {console.log("list", this.state)});
 
         
     }
@@ -23,9 +26,10 @@ class CartScreen extends React.Component{
     //trying to improve cart functionality using below function
     trialFunction = () => {
         var seats = this.props.seats;
-        var seatFoodobject = {};
-        
+        var result = [];
+
         for (let i = 0; i < seats.length; i++) {
+            var seatFoodobject = {};
             seatFoodobject[seats[i]] = []
             
             this.props.foodArray.forEach(element => {
@@ -33,21 +37,23 @@ class CartScreen extends React.Component{
                     seatFoodobject[seats[i]].push(element);
                 }
             });
+            result.push(seatFoodobject);
         }
-
-        return  seatFoodobject;
-        
+        console.log(result);
+        return  result;   
     }
 
     render() {
         const { listOfItems } = this.state;
+        console.log(listOfItems);
         return(
             <View style={styles.process}>
                 <ScrollView>
-                    <View>
-                        {
-                            listOfItems.map((item, index) => <CartItem key={index} item={item} click={this.total} />)
-                        }
+                    <View style={styles.seatsFood}>
+                        { listOfItems.length != 0 ?
+                            listOfItems.map((item, index) => <SeatFood key={index} seatfoodDetails={item}></SeatFood>)
+                        : <Text></Text>}
+                        
                     </View>
                 </ScrollView>
                 <View style={styles.button} >
@@ -63,12 +69,20 @@ class CartScreen extends React.Component{
 }
 
 const styles = StyleSheet.create({
+    seatsFood: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-evenly' 
+    },
     button: {
         width: 200,
         marginLeft: 130
     },
     process: {
-        alignItems: 'center',
+        flex: 1,
+        margin: 10,
+        // alignItems: 'center',
     }
 })
 

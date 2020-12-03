@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, View, Text, Image, Button, Dimensions  } from 'react-native';
 import OrderSeat from './orderSeat';
 import { connect } from 'react-redux';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const {width,height} = Dimensions.get('window')
 
@@ -25,13 +26,15 @@ class OrderItems extends Component {
         const { seats } = this.state;
 
         return (
-            <View style={styles.view}>
+            <View style={styles.outerContainer}>
                 <View>
                     <Image 
                         style={styles.image}
                         source={{uri:item.imageUrl}}
                     />
                 </View>
+                <Text>{item.itemName}</Text>
+                <Text><FontAwesome5Icon name={'rupee-sign'}/>{item.unitPrice}</Text>
                 <View style={styles.seats}>
                     <View style={styles.marginbottom}>
                         {
@@ -58,14 +61,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         margin: 2
     },
-    view: {
+    outerContainer: {
+        flexDirection: 'column',
         borderWidth: 1,
-        width: 340,
+        width: width/4,
         borderRadius: 10,
-        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+        
     },
     text: {
-        fontSize: 20,
+        fontSize: 16,
         margin: 'auto'
     },
     button: {
@@ -73,10 +79,13 @@ const styles = StyleSheet.create({
         bottom: 0,
         borderRadius: 10,
         width: 100,
-        marginLeft: 73,
+        // marginLeft: 73,
+        
     },
     seats: {
-        margin: 2,
+        margin: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     marginbottom: {
         marginBottom: 30

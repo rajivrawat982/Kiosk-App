@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import OrderItems from './foodamountSelection';
 import { connect } from 'react-redux';
 
+const height = Dimensions.get('window').height;
 class OrderFood extends Component {
     constructor(props) {
         super(props)
@@ -47,8 +48,11 @@ class OrderFood extends Component {
 
 const styles = StyleSheet.create({
     view: {
+        // flex: 1,
         margin: 10,
         alignItems: 'center',
+        justifyContent: 'center',
+        height: height
     }
 })
 
