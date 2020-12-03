@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { StyleSheet, View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
-import socketIO from 'socket.io-client';
+// import socketIO from 'socket.io-client';
+import { socket } from "../../SocketComponent";
 
 
  
@@ -51,7 +52,7 @@ class OrderSeat extends Component {
             }
         })
         this.props.increment(this.state.food);
-        let socket = socketIO('http://10.10.3.91:4000');
+        // let socket = socketIO('http://10.10.3.91:4000');
         socket.emit("decreaseAmount", {itemId: this.state.food.foodItemId})
     }
 
@@ -68,7 +69,7 @@ class OrderSeat extends Component {
             })
         
             this.props.decrement(this.state.food)
-            let socket = socketIO('http://10.10.3.91:4000');
+            // let socket = socketIO('http://10.10.3.91:4000');
             socket.emit("increaseAmount", {itemId: this.state.food.foodItemId})
         }
     }

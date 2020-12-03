@@ -19,15 +19,10 @@ class OrderItems extends Component {
         })
     }
 
-    sendingOrderItem = () => {
-        this.props.navigation.navigate('fooditems')
-    }
 
     render() {
         const { item } = this.props;
         const { seats } = this.state;
-
-        // console.log("checking about seats", seats);
 
         return (
             <View style={styles.view}>
@@ -47,7 +42,7 @@ class OrderItems extends Component {
                         <Button 
                             title='Done'
                             color='orange'
-                            onPress={ () => this.sendingOrderItem()}
+                            onPress={ () => this.props.navigation.navigate('fooditems')}
                         />
                     </View>
                 </View>

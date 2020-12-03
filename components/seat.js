@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, TouchableOpacity, Button, Text, View } from 'react-native';
-import socketIO from 'socket.io-client';
+import { StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+// import socketIO from 'socket.io-client';
+import {socket} from '../SocketComponent';
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 import { connect } from 'react-redux';
 
@@ -34,11 +36,11 @@ class Seat extends Component {
         if (this.props.userSelectedSeats.includes(data.seatNumber)) {
             console.log("entering to remove seat")
             this.props.removeSeat(data.seatNumber);
-            let socket = socketIO('http://10.10.3.91:4000');
+            // let socket = socketIO('http://10.10.3.91:4000');
             socket.emit("seatSelected", {seatNumber: data.seatNumber, selected: 0})
         } else {
             this.props.addSeat(data.seatNumber);
-            let socket = socketIO('http://10.10.3.91:4000');
+            // let socket = socketIO('http://10.10.3.91:4000');
             socket.emit("seatSelected", {seatNumber: data.seatNumber, selected: 1});
             //this.props.receivedData()
         }
@@ -71,17 +73,12 @@ class Seat extends Component {
 
         return (
 
-            <View>
-            <TouchableOpacity style={[styles.border, {backgroundColor: this.state.backgroundColor}]} disabled={this.disableCheck(data)} onPress={() => this.sendData(data)}>
-                {/* <Button 
-                    //disabled={disableCheck(data)} 
-                    // color={(data.seatStatus ===1  || (data.seatSelected ===1  && !this.state.userSelectedSeat.includes(data.seatNumber))) ? '#A9A9A9' : 
-                    // (data.seatSelected === 1 && this.state.userSelectedSeat.includes(data.seatNumber)) ? '#00FF00' : '#D3D3D3' }
-                    color={this.props.userSelectedSeats.includes(data.seatNumber) ? 'green' : data.status == 1 ? 'red' : 'gray'}
-                    title={data.seatNumber + ''} 
-                    
-                /> */}
-                <Text color={this.props.userSelectedSeats.includes(data.seatNumber) ? 'green' : data.status == 1 ? 'red' : 'gray'}>{data.seatNumber+ ''}</Text>
+            <View style={[styles.border]}>
+            <TouchableOpacity  disabled={this.disableCheck(data)} onPress={() => this.sendData(data)}>
+                <View style={{alignItems: 'center'}}>
+                <FontAwesome5 name={'couch'} size={20} color={this.state.backgroundColor}/>
+                <Text color={this.props.userSelectedSeats.includes(data.seatNumber) ? 'green' : data.status == 1 ? 'red' : 'gray'}>{data.seatNumber + ''}</Text>
+                </View>
             </TouchableOpacity>
             </View>
         )
@@ -90,8 +87,11 @@ class Seat extends Component {
 
 const styles = StyleSheet.create({
     border: {
-        width: 50,
-        marginBottom: 30
+        width: 40,
+        height:30,
+        marginBottom: 30,
+        alignItems: 'center',
+        // backgroundColor: 'red'
     }
 });
 

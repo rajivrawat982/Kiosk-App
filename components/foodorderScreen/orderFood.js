@@ -16,6 +16,10 @@ class OrderFood extends Component {
     componentDidMount() {
         console.log("orderFood componentDidMount");
 
+        //below setTimeout is used if user take to much time on this screen without process we will proceed him on other Screen
+        // setTimeout(() => {
+        //     this.props.navigation.navigate('Home');
+        // }, 10000);
 
         this.setState({
             foodItems: this.props.foodItemsArray
@@ -28,7 +32,7 @@ class OrderFood extends Component {
 
     render() {
         const { foodItems } = this.state
-        // console.log("nmjrejkngjkrtengiontgontjgniot",foodItems[foodItems.length - 1])
+        
         return (
             <View>
                 <View style={styles.view}>
@@ -52,6 +56,6 @@ const mapStateToProps = (state) => {
     return {
         foodItemsArray: state.foodorderReducer.foodItemsArray
      }
- }
+}
  
 export default connect(mapStateToProps)(OrderFood)

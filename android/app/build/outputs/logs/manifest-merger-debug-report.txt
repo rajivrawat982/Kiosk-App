@@ -5,6 +5,7 @@ INJECTED from /home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main
 INJECTED from /home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:1:1-27:12
 INJECTED from /home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:1:1-27:12
 MERGED from /home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:1:1-27:12
+MERGED from [:react-native-vector-icons] /home/rajeev/Desktop/robocafe_react/MytestApp/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [com.facebook.flipper:flipper:0.54.0] /home/rajeev/.gradle/caches/transforms-2/files-2.1/d202ba8bc8961450333bf473e6298c94/jetified-flipper-0.54.0/AndroidManifest.xml:8:1-18:12
 MERGED from [com.facebook.flipper:flipper-network-plugin:0.54.0] /home/rajeev/.gradle/caches/transforms-2/files-2.1/4702e8cbe5c66b644ed2f56d7cf1ab9a/jetified-flipper-network-plugin-0.54.0/AndroidManifest.xml:8:1-15:12
 MERGED from [com.facebook.flipper:flipper-fresco-plugin:0.54.0] /home/rajeev/.gradle/caches/transforms-2/files-2.1/7c077107cba6636db2ecf683d1903857/jetified-flipper-fresco-plugin-0.54.0/AndroidManifest.xml:8:1-15:12
@@ -156,6 +157,8 @@ uses-sdk
 INJECTED from /home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-vector-icons] /home/rajeev/Desktop/robocafe_react/MytestApp/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-vector-icons] /home/rajeev/Desktop/robocafe_react/MytestApp/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.flipper:flipper:0.54.0] /home/rajeev/.gradle/caches/transforms-2/files-2.1/d202ba8bc8961450333bf473e6298c94/jetified-flipper-0.54.0/AndroidManifest.xml:11:5-13:41
 MERGED from [com.facebook.flipper:flipper:0.54.0] /home/rajeev/.gradle/caches/transforms-2/files-2.1/d202ba8bc8961450333bf473e6298c94/jetified-flipper-0.54.0/AndroidManifest.xml:11:5-13:41
 MERGED from [com.facebook.flipper:flipper-network-plugin:0.54.0] /home/rajeev/.gradle/caches/transforms-2/files-2.1/4702e8cbe5c66b644ed2f56d7cf1ab9a/jetified-flipper-network-plugin-0.54.0/AndroidManifest.xml:11:5-13:41

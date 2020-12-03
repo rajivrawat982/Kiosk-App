@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
-import { StyleSheet, View, Button , ScrollView, Text} from 'react-native';
+import { StyleSheet, View, Button , ScrollView, Text, Dimensions} from 'react-native';
 import Seat from './seat';
-import socketIO from 'socket.io-client';
+import { socket } from '../SocketComponent';
+// import socketIO from 'socket.io-client';
 import { connect, connectAdvanced } from 'react-redux';
 import { loadInitialSeatsSocket, clearUserSeats, getUpdatedState, initialSeats ,updateSeats} from '../reduxConfig/actions';
 import axios from 'axios';
+
+let width = Dimensions.get('window').width;
 
 
 class seats extends Component {
@@ -27,7 +30,7 @@ class seats extends Component {
       }
     ).then(this.updatingReduxSeats)
     
-    const socket = socketIO("http://10.10.3.91:4000")
+    // const socket = socketIO("http://10.10.3.91:4000")
     socket.on('updatedSeatSelection', res => {
       this.props.lesscheck(res);
       
@@ -40,7 +43,7 @@ class seats extends Component {
     console.log("seats componentDidmount")
   }
 
-  //clear redux store here
+  //clear redux store here in componentWillUnmount
   componentWillUnmount() {
     console.log("seats component is unmounting")
   }
@@ -52,15 +55,14 @@ class seats extends Component {
     })
   }
 
+  continueOnFoodScreen = () => {
+    if(this.props.userSelectedSeats.length == 0) {
+      alert('Select your seats first')
+    } else {
+      this.props.navigation.navigate('fooditems');
+    }
+  }
   
-  // receivedData = () => {
-  //   const socket = socketIO("http://10.10.3.91:4000")
-  //   //this.props.updatedSeats(socket);
-
-  //   // this.setState({
-  //   //   list: this.props.serverSeats
-  //   // })
-  // }
 
   render () { 
     const { list } = this.state;
@@ -110,7 +112,7 @@ class seats extends Component {
         <View style={styles.button} >
           <Button
             title="Continue" 
-            onPress={() => navigation.navigate('fooditems')}
+            onPress={() => this.continueOnFoodScreen()}
             color='orange'
           />
         </View>
@@ -121,32 +123,35 @@ class seats extends Component {
 }
 
 const styles = StyleSheet.create({
-  reverse: {
-    display: 'flex',
-    flexDirection: 'column-reverse',
-    marginLeft: 50
+  grid: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    margin: 20,
   },
-    border: {
-      marginLeft: 50
-    },
-    reverseMargin: {
-      display: 'flex',
-      flexDirection: 'column-reverse',
-      marginLeft: 50
-    },
-    grid: {
-      display: "flex",
-      flexDirection: 'row',
-      marginLeft: 20
+  reverse: {
+    flex: 1,
+    flexDirection: 'column-reverse',
+    alignItems: 'center'
+  },
+  border: {
+    flex: 1,
+    alignItems: 'center'
+  },
+  reverseMargin: {
+    flex: 1,
+    flexDirection: 'column-reverse',
+    alignItems: 'center'
     }
+    
 //     text: {
 //       textAlign: 'center',
 //       fontSize: '21px'
 //     },
-//     button: {
-//       width: '10%',
-//       marginLeft: '59%'
-//     }
+    // button: {
+    //   width: '40%',
+    //   marginLeft: '59%'
+    // }
 });
 
 const mapStateToProps = (state) => {

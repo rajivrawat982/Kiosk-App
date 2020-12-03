@@ -4,7 +4,9 @@ import FoodItem from './Fooditem';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import {initialFoodlist , getUpdatedFoodlist, updateFoodlist} from '../../reduxConfig/foodlist/foodAction';
-import socketIO from 'socket.io-client';
+// import socketIO from 'socket.io-client';
+import { socket} from '../../SocketComponent';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 
@@ -32,12 +34,16 @@ class FoodItems extends React.Component{
     ).then(this.updatingReduxFoodlist)
 
     //always listening for this foodevent anytime foodAmount updates it will update in every single instance 
-    const socket = socketIO("http://10.10.3.91:4000")
+    // const socket = socketIO("http://10.10.3.91:4000")
     socket.on('updatedFooddata', res => {
       this.props.socketFoodlist(res);
     })
 
+
+    //using this navigation event for seeing if user is on that screen or not if he is on screen below function do something for code, 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
+
+      //do something 
       this.setState({                                           
         foodItems: this.props.foodlist
       })
@@ -57,11 +63,11 @@ class FoodItems extends React.Component{
     })
   }
 
-  // viewCart = () => {
-  //   if(this.props.foodArray.length !== 0) {
-  //     this.props.navigation.navigate('process') 
-  //   }
-  // }
+  viewCart = () => {
+    if(this.props.foodArray.length !== 0) {
+      this.props.navigation.navigate('cart') 
+    }
+  }
 
   render() {
     const { foodItems } = this.state;
@@ -74,10 +80,15 @@ class FoodItems extends React.Component{
             }
           </View>
         </ScrollView>
-          {/* <TouchableOpacity style={this.props.food.foodArray.length !== 0 ?  [styles.button, {visibility: 'visible'}]: {display: 'none'}} onPress={() => this.viewCart()}>
-            <Text style={styles.text}>View Cart</Text> 
-            <Text style={styles.text}>Total: {this.props.food.total}</Text> 
-          </TouchableOpacity> */}
+
+        <View style={this.props.foodArray.length !== 0 ? styles.cart : {display: 'none'}}>
+          <TouchableOpacity onPress={() => this.viewCart()}>
+            <FontAwesome5 name={'shopping-cart'} size={20} color={'orange'}/>
+            {/* <Text >Total: {this.props.total}</Text>  */}
+          </TouchableOpacity>
+           
+        </View>
+          
       </View>
     )
   }
@@ -101,19 +112,23 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: "row"
   },
-  text: {
-    marginTop: 15,
-    marginBottom: 15,
-    color: 'white',
-    fontSize: 16,
-    flex: 3,
-    textAlign: "center"
+  cart: {
+    position:"relative",
+    backgroundColor: "#000",
+    height: 50,
+    width: 50,
+    bottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    borderRadius: 25
   }
 })
 const mapStateToProps = (state) => {
   return {
       foodArray: state.foodReducer.foodArray,
-      foodlist: state.foodReducer.foodlist
+      foodlist: state.foodReducer.foodlist,
+      total: state.foodReducer.total
    }
 }
 

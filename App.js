@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-// import socketIO from 'socket.io-client';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -23,12 +22,12 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 
-
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './components/HomeScreen';
 import Fooditems from './components/foodScreen/Fooditems';
 import seats from './components/seats';
 import orderFood from './components/foodorderScreen/orderFood';
+import CartScreen from './components/cartScreen/cartScreen';
 
 
 const App = () => {
@@ -45,7 +44,7 @@ const App = () => {
           <Stack.Screen name="seats" component={seats} />
           <Stack.Screen name="fooditems" component={Fooditems} />
           <Stack.Screen name="orderfood" component={orderFood} />
-
+          <Stack.Screen name="cart" component={CartScreen} />
 
           </Stack.Navigator>
         
