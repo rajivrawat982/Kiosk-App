@@ -24,7 +24,7 @@ class OrderFood extends Component {
 
         this.setState({
             foodItems: this.props.foodItemsArray
-        }, console.log(this.props.foodItemsArray))
+        })
     }
 
     componentWillUnmount() {

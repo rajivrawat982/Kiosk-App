@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, Button, Dimensions, ScrollView } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
 
@@ -11,6 +12,15 @@ class FoodItem extends React.Component {
     order = (data) => {
         this.props.foodItemList(data)
         this.props.navigation.navigate('orderfood')
+    }
+
+    onClickAddCart = (item) => {
+        
+        if (item.amountAvailable !== 0) {
+            this.order(item);
+        } else {
+            alert('item not Available')
+        }
     }
     
     render() {
@@ -29,7 +39,18 @@ class FoodItem extends React.Component {
                     <Text style={styles.text} >Available: {item.amountAvailable}</Text>
                     
                 </View>
-                <View style={styles.addCart}>
+
+                <View>
+                    <TouchableOpacity  style={ item.amountAvailable !== 0 ? styles.itemAvailable : styles.itemNotAvailable} 
+                                       onPress = {() => {this.onClickAddCart(item)}}>
+
+                        <Text style={{fontSize:18, color:"white", fontWeight:"bold"}}>{item.amountAvailable !==0 ? `Add Cart` : `Available soon`}</Text>
+                        <View style={{width:10}} />
+                    
+                    </TouchableOpacity>
+                </View>
+
+                {/* <View style={styles.addCart}>
                         <View style={ item.amountAvailable !== 0 ? {visibility: 'visible' }:{ display: 'none' } }>
                             <Button 
                                 onPress={() => this.order(item)}
@@ -44,7 +65,7 @@ class FoodItem extends React.Component {
                                 color="red"
                             />
                         </View>
-                </View>
+                </View> */}
             </View>
         )
     }
@@ -78,6 +99,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 5,
     },
+    itemAvailable: {
+        width:(width/4)-40,
+        // backgroundColor:'#33c37d',
+        backgroundColor: '#ffac05',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:"center",
+        borderRadius:5,
+        padding:4
+    },
+    itemNotAvailable: {
+        width:(width/4)-40,
+        backgroundColor:'#babfbb',
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:"center",
+        borderRadius:5,
+        padding:4
+    },
+
     
   })
 

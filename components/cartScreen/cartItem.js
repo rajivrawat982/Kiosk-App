@@ -22,23 +22,34 @@ class CartItem extends Component {
     }
 
     increase = () => {
-        this.setState({
-            food:{
-                foodName: this.props.item.foodName,
-                foodItemId: this.state.food.foodItemId,
-                seat: this.state.food.seat,
-                unitPrice: this.props.item.unitPrice, 
-                imageUrl: this.props.item.imageUrl,
-                value: this.state.food.value + 1, 
-            },
-        })
-        this.props.increment(this.state.food);
-        socket.emit("decreaseAmount", {itemId: this.state.food.foodItemId})
+        this.props.foodlist.forEach(element => {
+            if(element.itemId == this.state.food.foodItemId) {
+                if(element.amountAvailable > 0) {
+                    this.setState({
+                        food:{
+                            foodName: this.props.item.itemName,
+                            foodItemId: this.state.food.foodItemId, 
+                            seat: this.state.food.seat,
+                            unitPrice: this.props.item.unitPrice, 
+                            imageUrl: this.props.item.imageUrl,
+                            value: this.state.food.value + 1, 
+                        }
+                    } , () => this.props.increment(this.state.food));
+                    
+                    
+                    socket.emit("decreaseAmount", {itemId: this.state.food.foodItemId});
+                    
+                } else if (element.amountAvailable == 0) {
+                    alert(`No more ${element.itemName} available`);
+                }
+            }
+        });
 
     }
 
     decrease = () => {
-        if (this.state.food.value >= 0) {
+        console.log('curent food value', this.state.food.value)
+        if (this.state.food.value >=0) {
             this.setState({
                 food: { 
                     foodName: this.props.item.foodName,
@@ -48,11 +59,13 @@ class CartItem extends Component {
                     imageUrl: this.props.item.imageUrl,
                     value: this.state.food.value - 1,
                 },
-            })
-            this.props.decrement(this.state.food)
+            }, () => this.props.decrement(this.state.food));
+            
             socket.emit("increaseAmount", {itemId: this.state.food.foodItemId})
-
         }
+        // } else if (this.state.food.value == 0) {
+        //     this.props.remove(this.state.food);
+        // }
     }
 
     render() {
@@ -87,13 +100,13 @@ class CartItem extends Component {
                             </View>
                         </View>
                     </View>
-                    {/* <View style={ this.state.food.value === 0 ? { width: 75, margin: 5, visibility: 'visible' } : { display: 'none' }}>
+                    <View style={ this.state.food.value === 0 ? { width: 75, margin: 5, visibility: 'visible' } : { display: 'none' }}>
                         <Button 
                             title='Add'
                             color='orange'
                             onPress={() => this.increase()}
                         />
-                    </View> */}
+                    </View>
                 </View>
             </View>
         )
@@ -140,6 +153,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         total: state.foodReducer.total,
+        foodlist: state.foodReducer.foodlist
      }
  }
 
@@ -147,6 +161,7 @@ const mapDispatchToProps = dispatch => {
      return {
        increment: (data) => dispatch({type: 'INCREMENT', data}),
        decrement: (data) => dispatch({type: 'DECREMENT', data}),
+       remove: (data) => dispatch({type: 'REMOVE' , data})
      }
  }
  

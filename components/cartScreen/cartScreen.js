@@ -1,8 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Button, Text, ScrollView} from 'react-native';
+import { StyleSheet, View, Button, Text, ScrollView, Dimensions} from 'react-native';
 import { connect } from 'react-redux';
-// import seat from '../seat';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import SeatFood from './seatFood';
+
+const width = Dimensions.get('window').width;
 
 class CartScreen extends React.Component{
     constructor(props) {
@@ -13,9 +15,8 @@ class CartScreen extends React.Component{
     }
 
     componentDidMount() {
-        var response = this.trialFunction();
-        // console.log("rersdsd", response);
-        
+        var response = this.separateSeatsFoodArray();
+
         this.setState({
             listOfItems: response,
         },() => {console.log("list", this.state)});
@@ -24,7 +25,7 @@ class CartScreen extends React.Component{
     }
 
     //trying to improve cart functionality using below function
-    trialFunction = () => {
+    separateSeatsFoodArray = () => {
         var seats = this.props.seats;
         var result = [];
 
@@ -39,13 +40,13 @@ class CartScreen extends React.Component{
             });
             result.push(seatFoodobject);
         }
-        console.log(result);
-        return  result;   
+
+        return  result;  
     }
 
     render() {
         const { listOfItems } = this.state;
-        console.log(listOfItems);
+        // console.log(listOfItems);
         return(
             <View style={styles.process}>
                 <ScrollView>
@@ -56,12 +57,25 @@ class CartScreen extends React.Component{
                         
                     </View>
                 </ScrollView>
-                <View style={styles.button} >
-                    {/* <Button
-                        title={this.props.food.total + ""}
-                        color='orange'
-                        onPress={() => console.log(this.props.food.total)}
-                    /> */}
+
+                <View style={styles.payment} >
+                    <View style={styles.paymentdetail}>
+                        <View>
+                            <Text>Bill Details</Text>
+                        </View>
+                        <View>
+                            <Text>{`item Total                  `}  <FontAwesome5  name={'rupee-sign'} size={12}/> {this.props.total} </Text>
+                            <Text>{`Taxes and Charges   `} <FontAwesome5  name={'rupee-sign'} size={12}/> {this.props.total*0.1}</Text>
+                        </View>
+                        
+                        </View>
+                        <View>
+                            <Button
+                                title='proceed to pay '
+                                color='orange'
+                                // onPress={() => console.log(this.props.food.total)}
+                            />
+                        </View>
                 </View>
             </View>
         )
@@ -75,22 +89,33 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'space-evenly' 
     },
-    button: {
-        width: 200,
-        marginLeft: 130
-    },
     process: {
         flex: 1,
         margin: 10,
-        // alignItems: 'center',
+    },
+    payment: {
+        position:"relative",
+        backgroundColor: '#ffe89c',
+        width: width,
+        // alignItems: "center",
+        justifyContent: 'flex-start',
+        alignSelf: "center",
+        // padding: 20,
+    },
+    paymentdetail: {
+        width: width/3,
+        backgroundColor: 'white',
+        marginLeft: 10,
+        padding: 5
     }
 })
 
 const mapStateToProps = (state) => {
-    console.log(state)
+    // console.log(state)
     return {
         seats: state.seatReducer.userSelectedSeats,
-        foodArray: state.foodReducer.foodArray
+        foodArray: state.foodReducer.foodArray,
+        total: state.foodReducer.total
     }
 }
  

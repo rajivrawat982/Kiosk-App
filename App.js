@@ -25,7 +25,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from './components/HomeScreen';
 import Fooditems from './components/foodScreen/Fooditems';
-import seats from './components/seats';
+import seats from './components/seatsScreen/seats';
 import orderFood from './components/foodorderScreen/orderFood';
 import CartScreen from './components/cartScreen/cartScreen';
 

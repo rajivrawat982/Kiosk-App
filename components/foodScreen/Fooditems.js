@@ -7,6 +7,7 @@ import {initialFoodlist , getUpdatedFoodlist, updateFoodlist} from '../../reduxC
 // import socketIO from 'socket.io-client';
 import { socket} from '../../SocketComponent';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { CLEAR_FOODARRAY } from '../../reduxConfig/foodlist/foodActionTypes';
 
 
 
@@ -25,7 +26,7 @@ class FoodItems extends React.Component{
   componentDidMount() {
 
     console.log("fooditems componentDidMount")
-    axios.get('http://10.10.3.91:4000/api/foodlist').then(
+    axios.get('http://10.10.3.94:4000/api/foodlist').then(
       response => {
         this.setState({
           foodItems: response.data
@@ -42,8 +43,7 @@ class FoodItems extends React.Component{
 
     //using this navigation event for seeing if user is on that screen or not if he is on screen below function do something for code, 
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
-
-      //do something 
+ 
       this.setState({                                           
         foodItems: this.props.foodlist
       })
@@ -54,6 +54,18 @@ class FoodItems extends React.Component{
   componentWillUnmount() {
     console.log("foodlist screen is unmounting");
     this._unsubscribe();
+
+    if ( this.props.orderStatus == false ) {
+        //this socket event is for if user pass back on previous screen without proceeding with order
+        socket.emit('clearUnorderFood' , this.props.foodArray);
+        this.props.clearSelectedFood();
+    } else {
+        this.props.clearSelectedFood();
+    }
+    
+
+
+
   }
 
   updatingReduxFoodlist = () => {
@@ -128,7 +140,9 @@ const mapStateToProps = (state) => {
   return {
       foodArray: state.foodReducer.foodArray,
       foodlist: state.foodReducer.foodlist,
-      total: state.foodReducer.total
+      total: state.foodReducer.total,
+      orderStatus: state.seatReducer.orderStatus,
+      // seats: state.seatReducer.userSelectedSeats
    }
 }
 
@@ -136,7 +150,8 @@ const mapDispatchToProps = dispatch => {
   return {
     updatedFood: (socket) => dispatch(getUpdatedFoodlist(socket)),
     apiFood: (foodItems) => dispatch(initialFoodlist(foodItems)),
-    socketFoodlist: (foodItems) => dispatch(updateFoodlist(foodItems))
+    socketFoodlist: (foodItems) => dispatch(updateFoodlist(foodItems)),
+    clearSelectedFood: () => dispatch({type : CLEAR_FOODARRAY}),
   }
 }
 

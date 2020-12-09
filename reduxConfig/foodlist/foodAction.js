@@ -1,4 +1,4 @@
-import {INITIAL_FOODLIST,  UPDATE_FOODLIST } from './foodActionTypes'
+import {CLEAR_FOODARRAY, INITIAL_FOODLIST,  UPDATE_FOODLIST } from './foodActionTypes'
 
 export const initialFoodlist = (res) => ({
     type: INITIAL_FOODLIST,
@@ -11,6 +11,8 @@ export const updateFoodlist = (res) => ({
     type: UPDATE_FOODLIST,
     foodlist: res
 })
+
+
 
 
 

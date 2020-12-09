@@ -1,0 +1,4 @@
+#Tue Dec 08 15:32:14 IST 2020
+base.0=/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

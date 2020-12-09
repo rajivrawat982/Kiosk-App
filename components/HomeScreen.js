@@ -19,10 +19,11 @@ class HomeScreen extends Component {
     this._unsubscribe = this.props.navigation.addListener('focus', () => {
       /*---------here might need to add some logic for checking selected seats in redux store [userSelectedSeats] because 
       we have to clear their selection in central server database--------*/
+      console.log('inside focus listner')
       if(this.props.userSelectedSeats.length !== 0) {
 
           //post request to clear multiple seats at a time 
-          axios.post('http://10.10.3.91:4000/api/clearSeats', {
+          axios.post('http://10.10.3.94:4000/api/clearSeats', {
             seats: this.props.userSelectedSeats
           });
       }

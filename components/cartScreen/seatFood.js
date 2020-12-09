@@ -10,17 +10,21 @@ class SeatFood extends Component {
         super(props)
         
         //we are getting an object in prop so we are retrieving its value using below statement it return array 
-        var foodArray = Object.values(this.props.seatfoodDetails);
-        var seatArray = Object.keys(this.props.seatfoodDetails);
+        // var foodArray = Object.values(this.props.seatfoodDetails);
+        // var seatArray = Object.keys(this.props.seatfoodDetails);
 
-        this.state = {
-            seat: seatArray[0],
-            fooddetail: foodArray[0]
-        }
+        // this.state = {
+        //     seat: seatArray[0],
+        //     fooddetail: foodArray[0]
+        // }
+    } 
 
-        // console.log(this.state.fooddetail);
-    }
+
     render() {
+
+        var foodArray = Object.values(this.props.seatfoodDetails)[0];
+        var seat = Object.keys(this.props.seatfoodDetails)[0];
+
         return (
             <View style={styles.singleSeatFood}>
                 <ScrollView>
@@ -30,12 +34,12 @@ class SeatFood extends Component {
                         </View>
                         <View style={{marginLeft: 20}}>
                             <Text>Seat</Text>
-                            <Text>{this.state.seat}</Text>
+                            <Text>{seat}</Text>
                         </View>
                     </View>
                     <View>
                         {
-                            this.state.fooddetail.map((item, index) => <CartItem key={index} item={item} click={this.total} />)
+                            foodArray.map((item, index) => <CartItem key={index} item={item} click={this.total} />)
                         }
                     </View>
                 </ScrollView>

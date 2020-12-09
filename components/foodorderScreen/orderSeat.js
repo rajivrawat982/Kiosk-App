@@ -43,20 +43,31 @@ class OrderSeat extends Component {
     }
 
     increase = () => {
-        this.setState({
-            food:{
-                foodName: this.props.item.itemName,
-                foodItemId: this.state.food.foodItemId, 
-                seat: this.state.food.seat,
-                unitPrice: this.props.item.unitPrice, 
-                imageUrl: this.props.item.imageUrl,
-                value: this.state.food.value + 1, 
+        this.props.foodlist.forEach(element => {
+            if(element.itemId == this.state.food.foodItemId) {
+                if(element.amountAvailable > 0) {
+                    this.setState({
+                        food:{
+                            foodName: this.props.item.itemName,
+                            foodItemId: this.state.food.foodItemId, 
+                            seat: this.state.food.seat,
+                            unitPrice: this.props.item.unitPrice, 
+                            imageUrl: this.props.item.imageUrl,
+                            value: this.state.food.value + 1, 
+                        }
+                    }, () => this.props.increment(this.state.food));
+                    
+                    // let socket = socketIO('http://10.10.3.91:4000');
+                    // console.log('increase', this.state.food)
+                    socket.emit("decreaseAmount", {itemId: this.state.food.foodItemId});
+                    
+                } else if (element.amountAvailable == 0) {
+                    alert(`No more ${element.itemName} available`);
+                }
             }
-        })
-        this.props.increment(this.state.food);
-        // let socket = socketIO('http://10.10.3.91:4000');
-        // console.log('increase', this.state.food)
-        socket.emit("decreaseAmount", {itemId: this.state.food.foodItemId})
+        });
+
+        
     }
 
     decrease = () => {
@@ -70,10 +81,8 @@ class OrderSeat extends Component {
                     imageUrl: this.props.item.imageUrl,
                     value: this.state.food.value - 1,
                 }
-            })
-        
-            this.props.decrement(this.state.food)
-            // let socket = socketIO('http://10.10.3.91:4000');
+            } , () => this.props.decrement(this.state.food))
+
             socket.emit("increaseAmount", {itemId: this.state.food.foodItemId})
         }
     }

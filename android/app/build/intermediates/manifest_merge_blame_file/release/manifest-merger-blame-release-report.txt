@@ -1,0 +1,63 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.mytestapp"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+8-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:4:5-67
+11-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:4:22-64
+12
+13    <application
+13-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:6:5-26:19
+14        android:name="com.mytestapp.MainApplication"
+14-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:7:7-38
+15        android:allowBackup="false"
+15-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:11:7-34
+16        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+16-->[androidx.core:core:1.1.0] /home/rajeev/.gradle/caches/transforms-2/files-2.1/73530a2d0c1df4b3085807c82555ce12/core-1.1.0/AndroidManifest.xml:24:18-86
+17        android:icon="@mipmap/ic_launcher"
+17-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:9:7-41
+18        android:label="@string/app_name"
+18-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:8:7-39
+19        android:roundIcon="@mipmap/ic_launcher_round"
+19-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:10:7-52
+20        android:theme="@style/AppTheme"
+20-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:12:7-38
+21        android:usesCleartextTraffic="true" >
+21-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:13:7-42
+22        <activity
+22-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:14:7-24:18
+23            android:name="com.mytestapp.MainActivity"
+23-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:15:9-37
+24            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+24-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:17:9-86
+25            android:label="@string/app_name"
+25-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:16:9-41
+26            android:launchMode="singleTask"
+26-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:18:9-40
+27            android:windowSoftInputMode="adjustResize" >
+27-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:19:9-51
+28            <intent-filter>
+28-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:20:9-23:25
+29                <action android:name="android.intent.action.MAIN" />
+29-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:21:13-65
+29-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:21:21-62
+30
+31                <category android:name="android.intent.category.LAUNCHER" />
+31-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:22:13-73
+31-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:22:23-70
+32            </intent-filter>
+33        </activity>
+34        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+34-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:25:7-84
+34-->/home/rajeev/Desktop/robocafe_react/MytestApp/android/app/src/main/AndroidManifest.xml:25:17-81
+35    </application>
+36
+37</manifest>

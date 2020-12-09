@@ -1,8 +1,10 @@
 import { ADD_SEAT, CLEAR_SEATS, INITIAL_SEATS, REMOVE_SEAT,UPDATE_SEATS } from './actionTypes';
 
+/*----------order status is used for checking while clearing out redux store at any moment of time on unmounting 
+set order status will be true when payment is done---------------------------*/
 const initialstate = {
     userSelectedSeats: [],
-    loading: false,
+    orderStatus: false,
     seats: [], 
 }
 
